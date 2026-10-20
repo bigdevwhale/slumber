@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- One quiet note a day, at waking. -->
+    <!-- Quiet notes: at waking, a few reality checks in the day, and before bed (a short buzz for checks). -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- Telling a dream aloud goes through the phone's own speech recogniser. -->
     <queries>
@@ -34,7 +35,7 @@
         </activity>
 
         <receiver
-            android:name=".notify.MorningReceiver"
+            android:name=".notify.NoteReceiver"
             android:exported="false" />
         <receiver
             android:name=".notify.BootReceiver"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="window">#FFF2E8D3</color>
-    <color name="red">#FFB8372A</color>
+    <color name="window">#FF15100C</color>
+    <color name="lamp">#FFE9A54B</color>
 </resources>

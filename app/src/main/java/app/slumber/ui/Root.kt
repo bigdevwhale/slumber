@@ -20,32 +20,34 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import app.slumber.MainActivity
 import app.slumber.container
 import app.slumber.data.Settings
-import app.slumber.notify.Morning
+import app.slumber.notify.Notes
 import app.slumber.ru
-import app.slumber.ui.atlas.SpotScreen
 import app.slumber.ui.capture.CaptureScreen
-import app.slumber.ui.cast.PersonScreen
+import app.slumber.ui.capture.ClarityScreen
+import app.slumber.ui.check.CheckScreen
 import app.slumber.ui.components.rememberNow
-import app.slumber.ui.dream.DreamScreen
-import app.slumber.ui.edit.EditScreen
 import app.slumber.ui.home.HomeScreen
+import app.slumber.ui.journal.DreamScreen
+import app.slumber.ui.journal.JournalScreen
 import app.slumber.ui.onboarding.WelcomeScreen
+import app.slumber.ui.ritual.RitualScreen
 import app.slumber.ui.settings.SettingsScreen
+import app.slumber.ui.signs.SignsScreen
 import app.slumber.ui.theme.U
 
 /** Everything a screen can open. */
 class Go(private val nav: NavHostController) {
     fun capture() = nav.navigate("capture") { launchSingleTop = true }
-    fun dream(id: Long, fresh: Boolean = false) = nav.navigate("dream/$id") {
-        launchSingleTop = true
-        if (fresh) popUpTo("main")
-    }
-    fun edit(id: Long, alt: Int) = nav.navigate("edit/$id/$alt") { launchSingleTop = true }
-    fun spot(id: Long) = nav.navigate("spot/$id") { launchSingleTop = true }
-    /** [id] 0 makes someone new; [label] fills in their name. */
-    fun person(id: Long, label: String = "") = nav.navigate("person/$id?label=${android.net.Uri.encode(label)}") { launchSingleTop = true }
+    /** After telling a dream: one question, instead of the capture screen. */
+    fun clarity(id: Long) = nav.navigate("clarity/$id") { popUpTo("main") }
+    fun journal() = nav.navigate("journal") { launchSingleTop = true }
+    fun dream(id: Long) = nav.navigate("dream/$id") { launchSingleTop = true }
+    fun signs() = nav.navigate("signs") { launchSingleTop = true }
+    fun check() = nav.navigate("check") { launchSingleTop = true }
+    fun ritual() = nav.navigate("ritual") { launchSingleTop = true }
     fun settings() = nav.navigate("settings") { launchSingleTop = true }
     fun back() { nav.popBackStack() }
     fun home() { nav.popBackStack("main", false) }
@@ -60,14 +62,14 @@ fun SlumberRoot(settings: Settings) {
 
     val dao = container.db.dao()
     val dreams by dao.dreams().collectAsStateWithLifecycle(initialValue = null)
-    val panels by dao.panels().collectAsStateWithLifecycle(initialValue = null)
-    val spots by dao.spots().collectAsStateWithLifecycle(initialValue = null)
-    val people by dao.people().collectAsStateWithLifecycle(initialValue = null)
-    // Past midnight the day rolls over.
+    val checks by dao.checks().collectAsStateWithLifecycle(initialValue = null)
+    val rituals by dao.rituals().collectAsStateWithLifecycle(initialValue = null)
+    val own by dao.ownSigns().collectAsStateWithLifecycle(initialValue = null)
+    // Past four in the morning the day rolls over.
     val tick = rememberNow(60_000) / 3_600_000
     val ru = context.ru
-    val book = remember(dreams, panels, spots, people, settings, tick, ru) {
-        Book(dreams.orEmpty(), panels.orEmpty(), spots.orEmpty(), people.orEmpty(), settings, ru)
+    val book = remember(dreams, checks, rituals, own, settings, tick, ru) {
+        Book(dreams.orEmpty(), checks.orEmpty(), rituals.orEmpty(), own.orEmpty(), settings, ru)
     }
     val go = remember(nav) { Go(nav) }
 
@@ -78,11 +80,16 @@ fun SlumberRoot(settings: Settings) {
     }
     val open by container.open.collectAsStateWithLifecycle()
     LaunchedEffect(open, settings.onboarded) {
-        if (open == null || !settings.onboarded) return@LaunchedEffect
+        val (what, _) = open ?: return@LaunchedEffect
+        if (!settings.onboarded) return@LaunchedEffect
         container.open.value = null
-        Morning.clear(context)
+        Notes.clear(context)
         nav.popBackStack("main", false)
-        go.capture()
+        when (what) {
+            MainActivity.OPEN_CHECK -> go.check()
+            MainActivity.OPEN_RITUAL -> go.ritual()
+            else -> go.capture()
+        }
     }
 
     Box(Modifier.fillMaxSize().background(U.c.bg)) {
@@ -98,24 +105,16 @@ fun SlumberRoot(settings: Settings) {
             composable("welcome") { WelcomeScreen { nav.navigate("main") { popUpTo("welcome") { inclusive = true } } } }
             composable("main") { HomeScreen(book, go) }
             composable("capture") { CaptureScreen(book, go) }
+            composable("clarity/{id}", arguments = listOf(navArgument("id") { type = NavType.LongType })) { e ->
+                ClarityScreen(e.arguments?.getLong("id") ?: 0L, book, go)
+            }
+            composable("journal") { JournalScreen(book, go) }
             composable("dream/{id}", arguments = listOf(navArgument("id") { type = NavType.LongType })) { e ->
                 DreamScreen(e.arguments?.getLong("id") ?: 0L, book, go)
             }
-            composable(
-                "edit/{id}/{alt}",
-                arguments = listOf(navArgument("id") { type = NavType.LongType }, navArgument("alt") { type = NavType.IntType }),
-            ) { e ->
-                EditScreen(e.arguments?.getLong("id") ?: 0L, e.arguments?.getInt("alt") ?: 0, book, go)
-            }
-            composable("spot/{id}", arguments = listOf(navArgument("id") { type = NavType.LongType })) { e ->
-                SpotScreen(e.arguments?.getLong("id") ?: 0L, book, go)
-            }
-            composable(
-                "person/{id}?label={label}",
-                arguments = listOf(navArgument("id") { type = NavType.LongType }, navArgument("label") { type = NavType.StringType; defaultValue = "" }),
-            ) { e ->
-                PersonScreen(e.arguments?.getLong("id") ?: 0L, e.arguments?.getString("label").orEmpty(), book, go)
-            }
+            composable("signs") { SignsScreen(book, go) }
+            composable("check") { CheckScreen(book, go) }
+            composable("ritual") { RitualScreen(book, go) }
             composable("settings") { SettingsScreen(book, go) }
         }
     }

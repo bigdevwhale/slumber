@@ -1,19 +1,17 @@
 package app.slumber.ui
 
 import androidx.compose.runtime.Immutable
+import app.slumber.data.Check
 import app.slumber.data.Dream
-import app.slumber.data.Panel
-import app.slumber.data.Person
+import app.slumber.data.OwnSign
+import app.slumber.data.Ritual
 import app.slumber.data.Settings
-import app.slumber.data.Spot
-import app.slumber.domain.Bed
-import app.slumber.domain.Fig
-import app.slumber.domain.Kind
-import app.slumber.domain.Look
-import app.slumber.domain.Mood
-import app.slumber.domain.Named
-import app.slumber.ui.art.Body
-import app.slumber.ui.art.Shot
+import app.slumber.data.morningOf
+import app.slumber.domain.Clarity
+import app.slumber.domain.Practice
+import app.slumber.domain.Sign
+import app.slumber.domain.Signs
+import app.slumber.domain.Spin
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -21,89 +19,62 @@ import java.time.ZoneId
 @Immutable
 class Book(
     val dreams: List<Dream>,
-    panels: List<Panel>,
-    val spots: List<Spot>,
-    val people: List<Person>,
+    val checks: List<Check>,
+    val rituals: List<Ritual>,
+    val ownSigns: List<OwnSign>,
     val settings: Settings,
     val ru: Boolean,
+    now: Long = System.currentTimeMillis(),
 ) {
     val zone: ZoneId = ZoneId.systemDefault()
-    val today: LocalDate = LocalDate.now(zone)
-
-    private val byDream = panels.groupBy { it.dreamId }
-    private val byPerson = people.associateBy { it.id }
-    private val bySpot = spots.associateBy { it.id }
-
-    val me: Person? = people.firstOrNull { it.me }
-    val meLook: Look get() = me?.lookOf ?: Look.Dreamer
-    val cast: List<Person> get() = people.filter { !it.me }
+    val today: LocalDate = morningOf(now, zone)
 
     fun dream(id: Long) = dreams.firstOrNull { it.id == id }
-    fun spot(id: Long) = bySpot[id]
-    fun person(id: Long) = byPerson[id]
 
-    /** A page's panels: the new ending if there is one (unless [original]), else the dream as it was. */
-    fun panels(dreamId: Long, alt: Int): List<Panel> = byDream[dreamId].orEmpty().filter { it.alt == alt }.sortedBy { it.idx }
-    fun hasAlt(dreamId: Long) = byDream[dreamId].orEmpty().any { it.alt == 1 }
-    fun showing(dreamId: Long) = if (hasAlt(dreamId)) 1 else 0
+    // Signs: the built-in ones and your own.
+    val own: List<Sign> = ownSigns.map { Signs.own(it.id, it.phrase) }
+    val signs: List<Sign> = Signs.all + own
+    private val texts = dreams.map { it.text }
 
-    fun body(f: Fig): Body = when (f) {
-        is Fig.Cast -> byPerson[f.id]?.let { Body(it.lookOf) } ?: Body(Look.of(Kind.SOMEONE), Kind.SOMEONE)
-        is Fig.Extra -> Body(Look.of(f.kind), f.kind)
-    }
+    /** Your dream signs, most frequent first. Your own phrases count from the first dream that shows them. */
+    val yours: List<Pair<Sign, Int>> = (Signs.yours(texts, Signs.all) + own.map { s -> s to texts.count { Signs.shows(s, it) } })
+        .sortedByDescending { it.second }
 
-    fun shot(p: Panel) = Shot(p.sceneOf, p.actOf, p.moodOf, p.figsOf.map(::body), p.doodle, (p.dreamId * 31 + p.idx * 7 + p.alt).toInt())
+    fun found(d: Dream): List<Sign> = Signs.found(d.text, signs)
+    fun dreamsWith(s: Sign): List<Dream> = dreams.filter { Signs.shows(s, it.text) }
+    fun sign(key: String): Sign? = signs.firstOrNull { it.key == key }
 
-    /** The first panel, for a cover in lists. */
-    fun cover(dreamId: Long): Shot? = panels(dreamId, showing(dreamId)).firstOrNull()?.let(::shot)
+    /** Tonight's sign for the ritual: the one you picked, or else your most frequent. */
+    val tonight: Sign? = sign(settings.sign) ?: yours.firstOrNull()?.first
 
-    // The bed and the fog.
-    val mornings: Int = dreams.map { it.day(zone) }.distinct().size
-    val stage: Int get() = Bed.stage(mornings)
+    // Practice, day by day.
+    private val dreamsByDay = dreams.groupBy { it.day(zone) }
+    private val checksByDay = checks.groupBy { morningOf(it.at, zone) }
+    private val ritualDays = rituals.map { morningOf(it.at, zone) }.toSet()
 
-    // The atlas.
-    private val allPanels = panels
-    fun dreamsAt(spotId: Long): List<Dream> = allPanels.filter { it.spotId == spotId }.map { it.dreamId }.distinct().mapNotNull(::dream)
+    fun practice(day: LocalDate) = Practice(
+        day,
+        dreamsByDay[day].orEmpty().size,
+        checksByDay[day].orEmpty().size,
+        day in ritualDays,
+        dreamsByDay[day].orEmpty().maxOfOrNull { it.clarityOf } ?: Clarity.NONE,
+    )
 
-    /** The mood that place is most often dreamt in. */
-    fun moodAt(spotId: Long): Mood = allPanels.filter { it.spotId == spotId }.groupingBy { it.moodOf }.eachCount().maxByOrNull { it.value }?.key ?: Mood.WONDER
+    val week: List<Practice> = (6 downTo 0).map { practice(today.minusDays(it.toLong())) }
+    val windUp: Float = Spin.windUp(week, today)
+    val seconds: Float = Spin.seconds(windUp)
 
-    /** Doors: one dream walking from one named place into another. Counted both ways as one. */
-    val doors: Map<Pair<Long, Long>, Int> = buildMap {
-        for ((_, ps) in byDream) {
-            val seq = ps.filter { it.alt == 0 }.sortedBy { it.idx }.map { it.spotId }.filter { it != 0L }
-            for ((a, b) in seq.zipWithNext()) {
-                if (a == b) continue
-                val k = if (a < b) a to b else b to a
-                put(k, (get(k) ?: 0) + 1)
-            }
-        }
-    }
+    val lucid: Int = dreams.count { it.clarityOf == Clarity.LUCID }
+    val glimmers: Int = dreams.count { it.clarityOf == Clarity.GLIMMER }
+    private val lastLucid: LocalDate? = dreams.filter { it.clarityOf == Clarity.LUCID }.maxOfOrNull { it.day(zone) }
 
-    /** Where the bed stands: the place of the latest dream that had one. */
-    val bedAt: Long? = dreams.firstNotNullOfOrNull { d -> byDream[d.id].orEmpty().lastOrNull { it.spotId != 0L }?.spotId }
+    /** A lucid dream this morning: today the top doesn't fall. */
+    val endless: Boolean = Spin.endless(lastLucid, today)
 
-    // The cast.
-    fun appearances(personId: Long): List<Dream> = allPanels.filter { Fig.Cast(personId) in it.figsOf }.map { it.dreamId }.distinct().mapNotNull(::dream)
+    val dreamtToday: Boolean get() = dreamsByDay[today].orEmpty().isNotEmpty()
+    val ritualToday: Boolean get() = today in ritualDays
+    val checksToday: Int get() = checksByDay[today].orEmpty().size
 
-    /**
-     * Someone nameless given the same label in two dreams or more ("my old teacher") who isn't in the cast
-     * yet: they've come back, and could be kept. Label → the dreams.
-     */
-    val returning: Map<String, List<Dream>> = run {
-        val names = people.map { it.name.trim().lowercase() }.toSet()
-        allPanels.flatMap { p -> p.figsOf.filterIsInstance<Fig.Extra>().map { it.label.trim() to p.dreamId } }
-            .filter { it.first.isNotEmpty() && it.first.lowercase() !in names }
-            .groupBy({ it.first.lowercase() }, { it })
-            .mapNotNull { (_, hits) ->
-                val ds = hits.map { it.second }.distinct()
-                if (ds.size >= 2) hits.first().first to ds.mapNotNull(::dream) else null
-            }.toMap()
-    }
-
-    val named: List<Named> get() = people.map { Named(it.id, it.name) }
-    val places: List<Named> get() = spots.map { Named(it.id, it.name, it.sceneOf) }
-
-    /** A new ending drawn in the last two weeks: read it again at night, before sleep. */
-    val toRehearse: Dream? get() = dreams.firstOrNull { it.rewritten > System.currentTimeMillis() - 14L * 86_400_000 && hasAlt(it.id) }
+    /** The last dream before today, to recall at bedtime. */
+    val lastDream: Dream? = dreams.firstOrNull()
 }

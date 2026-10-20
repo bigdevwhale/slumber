@@ -1,69 +1,76 @@
-"""Draws the README logo, the launcher icon's walking bed under a crescent moon, as docs/logo.png.
+"""Draws the README logo, the launcher icon's spinning top in lamplight, as docs/logo.png.
 
 python tools/icon.py
 """
+import math
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 S = 1024
 K = 4  # supersampling
 
-INK = (0x1B, 0x1A, 0x24)
-WOOD = (0x9A, 0x6A, 0x42)
-WOOD_DARK = (0x6E, 0x4A, 0x30)
-SHEET = (0xFF, 0xFC, 0xF4)
-RED = (0xB8, 0x37, 0x2A)
-GOLD = (0xD9, 0xA3, 0x3A)
+MAPLE = (0xD9, 0xA8, 0x6C)
+MAPLE_DARK = (0x9C, 0x6B, 0x3C)
+RED = (0xB8, 0x43, 0x2E)
+TEAL = (0x2E, 0x6E, 0x73)
+BRASS = (0xF1, 0xC6, 0x6C)
+STEEL = (0xB9, 0xB7, 0xB0)
+
+
+def bez(p0, p1, p2, p3, n=24):
+    return [tuple((1 - t) ** 3 * a + 3 * (1 - t) ** 2 * t * b + 3 * (1 - t) * t ** 2 * c + t ** 3 * d for a, b, c, d in zip(p0, p1, p2, p3))
+            for t in [i / n for i in range(n + 1)]]
 
 
 def main():
     n = S * K
-    im = Image.new("RGBA", (n, n), (0x26, 0x30, 0x5A, 255))
-    d = ImageDraw.Draw(im)
     u = n / 108
+    im = Image.new("RGB", (n, n), (0x15, 0x10, 0x0C))
+
+    # The lamp's warm pool.
+    glow = Image.new("RGB", (n, n), (0, 0, 0))
+    ImageDraw.Draw(glow).ellipse([-10 * u, 20 * u, 100 * u, 120 * u], fill=(0x7A, 0x51, 0x30))
+    glow = glow.filter(ImageFilter.GaussianBlur(26 * u))
+    im = Image.blend(im, glow, 0.8)
+    d = ImageDraw.Draw(im)
+    d.rectangle([0, 76 * u, n, n], fill=(0x22, 0x17, 0x0E))
+
+    rot = math.radians(7)
 
     def p(x, y):
-        return (x * u, y * u)
+        dx, dy = x - 54, y - 78
+        return ((54 + dx * math.cos(rot) - dy * math.sin(rot)) * u, (78 + dx * math.sin(rot) + dy * math.cos(rot)) * u)
 
-    def w(v):
-        return int(v * u)
+    d.ellipse([42 * u, 76 * u, 66 * u, 81 * u], fill=(0x0A, 0x07, 0x05))
+    # Stem.
+    d.polygon([p(51.6, 27), p(56.4, 27), p(56.4, 41), p(51.6, 41)], fill=MAPLE_DARK)
+    # Body.
+    left = bez((50.5, 72), (40, 66), (34, 57), (35, 48))
+    top_ = [(35 + (73 - 35) * t, 48 - 11 * 4 * t * (1 - t) * 0.5) for t in [i / 24 for i in range(25)]]
+    right = bez((73, 48), (74, 57), (68, 66), (57.5, 72))
+    body = [(54, 79)] + left + top_ + right
+    d.polygon([p(*q) for q in body], fill=MAPLE)
+    shade = [(57, 41.6), (66, 42.6), (73, 48)] + right + [(54, 79), (56, 72)] + bez((56, 72), (64, 64), (67, 55), (63, 44))
+    d.polygon([p(*q) for q in shade], fill=(0xB8, 0x86, 0x52))
+    # Stripes and brass rings.
+    for pts, c, wd in [(bez((45, 47), (44, 56), (48, 65), (52.5, 71)), RED, 3), (bez((56, 46), (57, 55), (56, 64), (55, 71)), TEAL, 2.4),
+                       (bez((66, 47.5), (66, 55), (63, 63), (57.5, 70.5)), RED, 1.6)]:
+        d.line([p(*q) for q in pts], fill=c, width=int(wd * u), joint="curve")
+    for y in (47.5, 44.5):
+        x0, x1 = (36, 72) if y > 46 else (37.5, 70.5)
+        ring = [(x0 + (x1 - x0) * t, y + 6.5 * 4 * t * (1 - t) * 0.5) for t in [i / 30 for i in range(31)]]
+        d.line([p(*q) for q in ring], fill=BRASS, width=int(1.6 * u), joint="curve")
+    d.polygon([p(54, 79.5), p(51.6, 74.5), p(56.4, 74.5)], fill=STEEL)
 
-    # Night, a far hill, stars, the moon (a disc with a bite taken out).
-    d.polygon([p(x, 78 - 4 * (x / 108) + 6 * ((x / 54 - 1) ** 2)) for x in range(0, 109)] + [p(108, 108), p(0, 108)], fill=(0x3A, 0x46, 0x77))
-    for x, y, r in [(28, 30, 1.2), (80, 24, 1), (86, 44, 1.2), (22, 50, 0.9), (50, 18, 0.8)]:
-        d.ellipse([*p(x - r, y - r), *p(x + r, y + r)], fill=(0xFF, 0xF4, 0xC8))
-    d.ellipse([*p(60, 26), *p(80, 46)], fill=(0xFF, 0xD9, 0x8A))
-    d.ellipse([*p(65, 23), *p(83, 41)], fill=(0x26, 0x30, 0x5A))
-
-    # Four legs mid-stride, the back pair darker.
-    for legs, c in [([(36, 60), (31, 70), (35, 80)], WOOD_DARK), ([(70, 60), (76, 70), (72, 80)], WOOD_DARK),
-                    ([(42, 60), (46, 70), (42, 80)], WOOD), ([(76, 60), (71, 70), (79, 80)], WOOD)]:
-        pts = [p(*q) for q in legs]
-        d.line(pts, fill=INK, width=w(4.4), joint="curve")
-        d.line(pts, fill=c, width=w(2.6), joint="curve")
-        fx, fy = pts[-1]
-        d.ellipse([fx - w(2), fy - w(1), fx + w(2.6), fy + w(1.2)], fill=INK)
-
-    # Headboard, knob, mattress, pillow, blanket, footboard.
-    out = w(1.4)
-    d.rectangle([*p(30, 42), *p(40, 61)], fill=WOOD, outline=INK, width=out)
-    d.pieslice([*p(30, 36), *p(40, 48)], 180, 360, fill=WOOD, outline=INK, width=out)
-    d.ellipse([*p(33, 35.5), *p(37, 39.5)], fill=GOLD, outline=INK, width=w(1))
-    d.rectangle([*p(39, 50), *p(79, 61)], fill=SHEET, outline=INK, width=out)
-    d.ellipse([*p(40, 44), *p(52, 52)], fill=SHEET, outline=INK, width=out)
-    d.polygon([p(50, 49), p(64, 46), p(79, 48), p(79, 62), p(50, 62)], fill=RED, outline=INK, width=out)
-    d.rectangle([*p(77, 46), *p(81, 61)], fill=WOOD, outline=INK, width=out)
-
-    # Rounded square.
     mask = Image.new("L", (n, n), 0)
     ImageDraw.Draw(mask).rounded_rectangle([0, 0, n - 1, n - 1], radius=int(n * 0.22), fill=255)
-    result = Image.new("RGBA", (n, n), (0, 0, 0, 0))
-    result.paste(im, (0, 0), mask)
-    result = result.resize((S, S), Image.LANCZOS)
+    out = Image.new("RGBA", (n, n), (0, 0, 0, 0))
+    out.paste(im, (0, 0), mask)
+    out = out.resize((S, S), Image.LANCZOS)
     (ROOT / "docs").mkdir(exist_ok=True)
-    result.save(ROOT / "docs/logo.png")
+    out.save(ROOT / "docs/logo.png")
 
 
 if __name__ == "__main__":

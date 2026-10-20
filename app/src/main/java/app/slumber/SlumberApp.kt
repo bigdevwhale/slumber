@@ -5,39 +5,26 @@ import android.content.Context
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 import app.slumber.data.DemoSeed
-import app.slumber.data.Person
 import app.slumber.data.SettingsStore
 import app.slumber.data.SlumberDatabase
-import app.slumber.domain.Look
-import app.slumber.notify.Morning
+import app.slumber.notify.Notes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 
 class AppContainer(context: Context) {
     val db = SlumberDatabase.create(context)
     val settings = SettingsStore(context)
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-    /** Where a tap from outside wants to go ("capture" from the morning note or the widget) and when. */
+    /** Where a tap from outside wants to go (capture, check, ritual) and when. */
     val open = MutableStateFlow<Pair<String, Long>?>(null)
 
     /** Fire-and-forget so a write survives the screen being closed right after tapping. */
     fun write(block: suspend AppContainer.() -> Unit) {
         scope.launch { block() }
-    }
-
-    private val meLock = Mutex()
-
-    /** The dreamer is always in the cast, from the first launch (and only once, however many ask at once). */
-    suspend fun ensureMe(name: String) {
-        meLock.withLock {
-            if (db.dao().me() == null) db.dao().insert(Person(name = name, look = Look.Dreamer.encode(), me = true))
-        }
     }
 }
 
@@ -48,11 +35,11 @@ class SlumberApp : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppContainer(this)
-        Morning.ensureChannel(this)
+        Notes.ensureChannels(this)
         container.scope.launch {
-            container.ensureMe(localized().getString(R.string.me))
-            if (BuildConfig.DEMO) DemoSeed.seedIfEmpty(container, this@SlumberApp.ru)
-            Morning.reschedule(this@SlumberApp)
+            container.settings.ensureSalt()
+            if (BuildConfig.DEMO) DemoSeed.seedIfEmpty(container)
+            Notes.reschedule(this@SlumberApp)
         }
     }
 }

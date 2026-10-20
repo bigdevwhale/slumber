@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6e9e1cbd187ed3574ecf5d01335213c7",
+    "identityHash": "fbea82b9dace8ce793422ee9d678e14e",
     "entities": [
       {
         "tableName": "dreams",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `at` INTEGER NOT NULL, `title` TEXT NOT NULL, `text` TEXT NOT NULL, `mood` TEXT NOT NULL, `lucid` INTEGER NOT NULL, `rewritten` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `at` INTEGER NOT NULL, `text` TEXT NOT NULL, `clarity` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -21,32 +21,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "title",
-            "columnName": "title",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "text",
             "columnName": "text",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "mood",
-            "columnName": "mood",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "lucid",
-            "columnName": "lucid",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "rewritten",
-            "columnName": "rewritten",
+            "fieldPath": "clarity",
+            "columnName": "clarity",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -70,8 +52,8 @@
         ]
       },
       {
-        "tableName": "panels",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dreamId` INTEGER NOT NULL, `idx` INTEGER NOT NULL, `alt` INTEGER NOT NULL, `scene` TEXT NOT NULL, `spotId` INTEGER NOT NULL, `figs` TEXT NOT NULL, `act` TEXT NOT NULL, `mood` TEXT NOT NULL, `caption` TEXT NOT NULL, `doodle` TEXT NOT NULL)",
+        "tableName": "checks",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `at` INTEGER NOT NULL, `self` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -80,63 +62,15 @@
             "notNull": true
           },
           {
-            "fieldPath": "dreamId",
-            "columnName": "dreamId",
+            "fieldPath": "at",
+            "columnName": "at",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "idx",
-            "columnName": "idx",
+            "fieldPath": "self",
+            "columnName": "self",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "alt",
-            "columnName": "alt",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "scene",
-            "columnName": "scene",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "spotId",
-            "columnName": "spotId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "figs",
-            "columnName": "figs",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "act",
-            "columnName": "act",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "mood",
-            "columnName": "mood",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "caption",
-            "columnName": "caption",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "doodle",
-            "columnName": "doodle",
-            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -148,48 +82,24 @@
         },
         "indices": [
           {
-            "name": "index_panels_dreamId",
+            "name": "index_checks_at",
             "unique": false,
             "columnNames": [
-              "dreamId"
+              "at"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_panels_dreamId` ON `${TABLE_NAME}` (`dreamId`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_checks_at` ON `${TABLE_NAME}` (`at`)"
           }
         ]
       },
       {
-        "tableName": "spots",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `scene` TEXT NOT NULL, `x` REAL NOT NULL, `y` REAL NOT NULL, `at` INTEGER NOT NULL)",
+        "tableName": "rituals",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `at` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "scene",
-            "columnName": "scene",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "x",
-            "columnName": "x",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "y",
-            "columnName": "y",
-            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -204,11 +114,22 @@
           "columnNames": [
             "id"
           ]
-        }
+        },
+        "indices": [
+          {
+            "name": "index_rituals_at",
+            "unique": false,
+            "columnNames": [
+              "at"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rituals_at` ON `${TABLE_NAME}` (`at`)"
+          }
+        ]
       },
       {
-        "tableName": "people",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `look` TEXT NOT NULL, `me` INTEGER NOT NULL, `at` INTEGER NOT NULL)",
+        "tableName": "own_signs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `phrase` TEXT NOT NULL, `at` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -217,21 +138,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "name",
-            "columnName": "name",
+            "fieldPath": "phrase",
+            "columnName": "phrase",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "look",
-            "columnName": "look",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "me",
-            "columnName": "me",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -251,7 +160,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6e9e1cbd187ed3574ecf5d01335213c7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fbea82b9dace8ce793422ee9d678e14e')"
     ]
   }
 }

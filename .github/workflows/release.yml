@@ -52,7 +52,7 @@ jobs:
       - name: Name the APK
         run: |
           mkdir -p dist
-          cp app/build/outputs/apk/release/app-release.apk "dist/Slumber.apk"
+          cp app/build/outputs/apk/release/app-release.apk "dist/Spintop.apk"
           if [ -z "$SIGNING_KEYSTORE_BASE64" ]; then
             echo "::warning::No signing secrets set — the APK is signed with the CI debug key."
           fi
@@ -60,13 +60,13 @@ jobs:
       - name: Release notes from CHANGELOG.md
         run: |
           awk -v v="${{ steps.v.outputs.name }}" 'index($0, "## [" v "]") == 1 {f=1; next} index($0, "## [") == 1 {f=0} f' CHANGELOG.md > dist/notes.md
-          [ -s dist/notes.md ] || echo "Slumber ${{ steps.v.outputs.name }}" > dist/notes.md
+          [ -s dist/notes.md ] || echo "Spintop ${{ steps.v.outputs.name }}" > dist/notes.md
           cat dist/notes.md
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.v.outputs.name }}
-          name: Slumber v${{ steps.v.outputs.name }}
+          name: Spintop v${{ steps.v.outputs.name }}
           body_path: dist/notes.md
           files: dist/*.apk

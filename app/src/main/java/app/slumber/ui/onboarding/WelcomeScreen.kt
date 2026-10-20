@@ -9,9 +9,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +22,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -39,52 +36,41 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.slumber.R
 import app.slumber.container
-import app.slumber.domain.Act
-import app.slumber.domain.Kind
-import app.slumber.domain.Look
-import app.slumber.domain.Mood
-import app.slumber.domain.Scene
-import app.slumber.notify.Morning
+import app.slumber.notify.Notes
 import app.slumber.ui.T
-import app.slumber.ui.art.Body
-import app.slumber.ui.art.Shot
-import app.slumber.ui.art.panel
-import app.slumber.ui.art.walkingBed
+import app.slumber.ui.art.SpinningTop
+import app.slumber.ui.art.rememberTopSpin
 import app.slumber.ui.components.Chip
 import app.slumber.ui.components.PrimaryButton
 import app.slumber.ui.ctx
+import app.slumber.ui.settings.BEDTIMES
 import app.slumber.ui.settings.WAKE_TIMES
-import app.slumber.ui.theme.Ink
-import app.slumber.ui.theme.Newsprint
 import app.slumber.ui.theme.U
 import app.slumber.ui.theme.UType
 
-/** Three pages: a dream becomes a page; your dreamland and its people; when you wake. */
+/** Three pages: the top that never falls in a dream; the day's checks; when you sleep and wake. */
 @Composable
 fun WelcomeScreen(onDone: () -> Unit) {
     val c = ctx()
     var page by rememberSaveable { mutableIntStateOf(0) }
     var wake by rememberSaveable { mutableIntStateOf(7 * 60 + 30) }
+    var bed by rememberSaveable { mutableIntStateOf(23 * 60) }
+    val spin = rememberTopSpin()
 
     fun finish() {
         c.container.write {
-            settings.update { it.copy(onboarded = true, wake = wake, morning = true) }
-            Morning.reschedule(c)
+            settings.update { it.copy(onboarded = true, wake = wake, bedtime = bed) }
+            Notes.reschedule(c)
         }
         onDone()
     }
 
     val ask = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { finish() }
 
-    Column(Modifier.fillMaxSize().background(U.c.bg).statusBarsPadding().navigationBarsPadding()) {
-        Box(Modifier.fillMaxWidth().weight(if (page == 2) 0.75f else 1f).padding(16.dp).clip(U.RLg).border(2.dp, Ink, U.RLg)) {
-            Canvas(Modifier.fillMaxSize()) {
-                when (page) {
-                    0 -> panel(Shot(Scene.CITY, Act.FLY, Mood.WONDER, listOf(Body(Look.Dreamer), Body(Look.of(Kind.BIRD), Kind.BIRD)), seed = 4))
-                    1 -> { drawRect(Newsprint.night); walkingBed(3, 0.3f) }
-                    else -> panel(Shot(Scene.CORRIDOR, Act.CHASED, Mood.FEAR, listOf(Body(Look.Dreamer), Body(Look.of(Kind.SHADOW), Kind.SHADOW)), seed = 2))
-                }
-            }
+    Column(Modifier.fillMaxSize().background(U.c.bg).navigationBarsPadding()) {
+        Box(Modifier.fillMaxWidth().weight(if (page == 2) 0.7f else 1f)) {
+            // The first page's top never falls; the next ones run down like any other.
+            SpinningTop(spin, 30f, endless = page == 0, rings = 2, modifier = Modifier.fillMaxSize())
         }
         AnimatedContent(page, transitionSpec = { fadeIn(tween(400)) togetherWith fadeOut(tween(200)) }, label = "page", modifier = Modifier.padding(horizontal = 24.dp)) { p ->
             Column {
@@ -93,6 +79,12 @@ fun WelcomeScreen(onDone: () -> Unit) {
                 Text(stringResource(listOf(R.string.w1_text, R.string.w2_text, R.string.w3_text)[p]), style = UType.Sub)
                 if (p == 2) {
                     Spacer(Modifier.height(14.dp))
+                    Text(stringResource(R.string.set_bedtime), style = UType.Small)
+                    Spacer(Modifier.height(6.dp))
+                    Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        BEDTIMES.forEach { m -> Chip(T.time(m), bed == m, { bed = m }) }
+                    }
+                    Spacer(Modifier.height(10.dp))
                     Text(stringResource(R.string.set_wake), style = UType.Small)
                     Spacer(Modifier.height(6.dp))
                     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -103,14 +95,14 @@ fun WelcomeScreen(onDone: () -> Unit) {
         }
         Spacer(Modifier.height(20.dp))
         Row(Modifier.fillMaxWidth().padding(horizontal = 24.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            repeat(3) { i -> Box(Modifier.size(8.dp).clip(CircleShape).background(if (i == page) U.c.red else U.c.line)) }
+            repeat(3) { i -> Box(Modifier.size(8.dp).clip(CircleShape).background(if (i == page) U.c.lamp else U.c.line)) }
         }
         Spacer(Modifier.height(16.dp))
         PrimaryButton(
             stringResource(if (page < 2) R.string.next else R.string.start),
             {
-                if (page < 2) page++
-                else if (Build.VERSION.SDK_INT >= 33 && !Morning.canNotify(c)) ask.launch(Manifest.permission.POST_NOTIFICATIONS)
+                if (page < 2) { page++; spin.spin() }
+                else if (Build.VERSION.SDK_INT >= 33 && !Notes.canNotify(c)) ask.launch(Manifest.permission.POST_NOTIFICATIONS)
                 else finish()
             },
             Modifier.fillMaxWidth().padding(horizontal = 20.dp),
@@ -118,4 +110,3 @@ fun WelcomeScreen(onDone: () -> Unit) {
         Spacer(Modifier.height(16.dp))
     }
 }
-

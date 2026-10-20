@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="44dp"
+    android:height="34dp"
+    android:viewportWidth="44"
+    android:viewportHeight="34">
+    <!-- A small spinning top in lamplight -->
+    <path android:fillColor="#8E2A1E" android:pathData="M21,2h2v6h-2z" />
+    <path android:fillColor="#C0503C" android:pathData="M22,33L20.4,29.5C15,26.6 12,22 12.6,17.5Q22,12 31.4,17.5C32,22 29,26.6 23.6,29.5Z" />
+    <path android:strokeColor="#E9A54B" android:strokeWidth="1.2" android:pathData="M13,18Q22,22 31,18" />
+</vector>

@@ -1,293 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Slumber</string>
+    <string name="app_name">Spintop</string>
     <string name="settings">Settings</string>
     <string name="back">Back</string>
     <string name="cancel">Cancel</string>
-    <string name="ok">OK</string>
     <string name="next">Next</string>
     <string name="start">Begin</string>
-    <string name="me">Me</string>
+    <string name="journal">Dream journal</string>
 
-    <!-- Morning note -->
-    <string name="channel">Morning</string>
-    <string name="channel_desc">One quiet “What did you dream?” around the time you wake</string>
+    <!-- Notes -->
+    <string name="ch_morning">Morning</string>
+    <string name="ch_morning_desc">One quiet “What did you dream?” when you usually wake</string>
+    <string name="ch_checks">Reality checks</string>
+    <string name="ch_checks_desc">A few “Are you dreaming?” nudges during the day</string>
+    <string name="ch_bedtime">Bedtime</string>
+    <string name="ch_bedtime_desc">The ritual before sleep</string>
     <string name="morning_title">What did you dream?</string>
     <string name="morning_text">Tell it now, before it fades. Fragments are fine.</string>
-
-    <!-- Tabs -->
-    <string name="tab_dreams">Dreams</string>
-    <string name="tab_atlas">Atlas</string>
-    <string name="tab_cast">Cast</string>
+    <string name="check_title">Are you dreaming?</string>
+    <string name="check_done">Checked</string>
+    <string name="bedtime_title">Time for the top</string>
+    <string name="bedtime_text">Two minutes before sleep: recall a dream, hold the top, set the intention.</string>
 
     <!-- Home -->
+    <string name="top_spins">Wound up for %1$s. Tap the top to spin it again.</string>
+    <string name="top_fallen">It fell, so this is waking life. Tap to spin it again.</string>
+    <string name="top_endless">A lucid dream this morning: today the top doesn’t fall.</string>
+    <string name="day_dream">Dream</string>
+    <string name="day_checks">Checks</string>
+    <string name="day_ritual">Ritual</string>
     <string name="tell">What did you dream?</string>
-    <string name="empty_title">The album is empty</string>
-    <string name="empty_sub">Tomorrow morning, before you even sit up, tell the app what you dreamt. It will become a page.</string>
-    <string name="rehearse_title">Read the new ending again</string>
-    <string name="rehearse_sub">Before sleep, run the rewritten dream through your head once. That’s how the old one loosens its grip.</string>
-    <string name="returning_title">“%1$s” is back</string>
-    <plurals name="returning_sub">
-        <item quantity="one">In %d dream already. Keep them in the cast?</item>
-        <item quantity="other">In %d dreams already. Keep them in the cast?</item>
+    <string name="ritual">The ritual before sleep</string>
+    <string name="check_now">Are you dreaming? Check</string>
+    <string name="home_sign">Tonight’s sign</string>
+    <string name="home_sign_none">Tell a few dreams and your signs will appear</string>
+    <plurals name="lucid_count">
+        <item quantity="one">%d lucid dream</item>
+        <item quantity="other">%d lucid dreams</item>
     </plurals>
-    <string name="rewritten_mark">new ending</string>
-    <plurals name="mornings">
-        <item quantity="one">%d morning remembered</item>
-        <item quantity="other">%d mornings remembered</item>
+    <plurals name="glimmer_count">
+        <item quantity="one">%d glimmer</item>
+        <item quantity="other">%d glimmers</item>
     </plurals>
-    <plurals name="bed_next">
-        <item quantity="one">%d more morning and it changes.</item>
-        <item quantity="other">%d more mornings and it changes.</item>
+    <plurals name="seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
     </plurals>
-    <string-array name="bed_stages">
-        <item>The bed is fast asleep.</item>
-        <item>The bed has stirred and grown little legs.</item>
-        <item>The bed stands up on its legs.</item>
-        <item>The bed walks out into your dreamland.</item>
-        <item>The bed strides over rooftops on long legs.</item>
-    </string-array>
 
     <!-- Capture -->
     <string name="capture_hint">What did you dream? Fragments are fine: a place, a face, a feeling…</string>
     <string name="capture_speak">Tell it aloud</string>
     <string name="capture_keep">Keep the dream</string>
     <string name="capture_fading">The words are fading, like the dream. Keep going: one key brings them back.</string>
+    <string name="clarity_q">Inside the dream, did you know it was a dream?</string>
+    <string name="clarity_sub">Honestly. Even a flicker counts.</string>
+    <string name="clarity_none">No</string>
+    <string name="clarity_glimmer">A glimmer: “wait, is this a dream?”</string>
+    <string name="clarity_lucid">Yes, it was clear</string>
+    <string name="clarity_signs">Signs in this dream, to catch next time:</string>
 
-    <!-- The page -->
-    <string name="masthead">In Slumberland</string>
-    <string name="woke">…and then I opened my eyes.</string>
-    <string name="side_new">New ending</string>
-    <string name="side_old">As dreamt</string>
-    <string name="dream_edit">Build the page</string>
-    <string name="dream_rewrite">Rewrite the ending</string>
-    <string name="dream_rewrite_again">Change the ending</string>
-    <string name="dream_rewrite_why">Bad dreams that come back can be loosened: give this one a new ending, then read it again before sleep for a few nights.</string>
-    <string name="dream_told">As told</string>
-    <string name="dream_name">Name the dream</string>
-    <string name="dream_name_hint">“The endless corridor”</string>
-    <string name="dream_forget">Forget</string>
-    <string name="dream_forget_title">Forget this dream?</string>
-    <string name="dream_forget_sub">The page and the words go for good.</string>
-    <string name="lucid">A lucid dream</string>
-    <string name="lucid_sub">You knew you were dreaming. A star goes on the banner.</string>
+    <!-- Journal -->
+    <string name="journal_empty">Nothing here yet. Tomorrow morning, before you sit up, tell the app what you dreamt.</string>
+    <string name="dream_signs">Signs</string>
+    <string name="dream_clarity">How clear</string>
+    <string name="cl_none">Ordinary</string>
+    <string name="cl_glimmer">Glimmer</string>
+    <string name="cl_lucid">Lucid</string>
+    <string name="forget">Forget</string>
+    <string name="forget_title">Forget this dream?</string>
+    <string name="forget_sub">It goes for good.</string>
 
-    <!-- Editing -->
-    <string name="edit_title">Build the page</string>
-    <string name="edit_title_new">A new ending</string>
-    <string name="edit_new_hint">Change the last panels so it ends differently: you turn round, the door opens onto the sea, the shadow is just a coat. The old ending stays on the back of the page.</string>
-    <string name="edit_add">Add a panel</string>
-    <string name="edit_empty">No panels yet.</string>
-    <string name="edit_left">Move earlier</string>
-    <string name="edit_right">Move later</string>
-    <string name="edit_remove">Remove panel</string>
-    <string name="edit_resplit">Start over from the words</string>
-    <string name="edit_resplit_sub">The panels are made again from what you told. Changes to this page are lost.</string>
-    <string name="l_where">Where</string>
-    <string name="l_who">Who</string>
-    <string name="l_what">What</string>
-    <string name="l_feel">Felt</string>
-    <string name="l_words">Words</string>
-    <string name="l_draw">Draw</string>
-    <string name="where_atlas">Your places</string>
-    <string name="where_kinds">Kinds of place</string>
-    <string name="where_name">Name this place</string>
-    <string name="where_rename">Rename this place</string>
-    <string name="where_name_title">A place of your own</string>
-    <string name="where_name_sub">If this place keeps coming back, give it a name and it goes on your atlas.</string>
-    <string name="where_name_hint">“Grandma’s house, but bigger”</string>
-    <string name="who_here">In this panel</string>
-    <string name="who_cast">From the cast</string>
-    <string name="who_extras">Someone nameless</string>
-    <string name="who_new">Someone new</string>
-    <string name="who_remove">Remove</string>
-    <string name="who_label_hint">Tap a nameless one to say who they were. If they come back, they can join the cast.</string>
-    <string name="who_label_placeholder">“the man at the door”</string>
-    <string name="words_hint">What happens in this panel</string>
-    <string name="draw_hint">Something no list has? Draw it on the panel with a finger. A loop gets filled in.</string>
-    <string name="draw_undo">Undo</string>
-    <string name="draw_clear">Clear</string>
-
-    <!-- Atlas -->
-    <string name="atlas_empty_title">Your dreamland has no map yet</string>
-    <string name="atlas_empty_sub">Many dreams return to the same places: that school, a house with extra rooms, an endless station. When building a page, name a place, and it appears here. Dreams that walk from one place into another make doors.</string>
-    <string name="atlas_hint">Pinch and drag the map. The fog lifts as the bed walks further.</string>
-    <string name="atlas_places">Places</string>
-    <plurals name="dreams_here">
-        <item quantity="one">%d dream</item>
-        <item quantity="other">%d dreams</item>
-    </plurals>
-    <string name="spot_doors">Doors to</string>
-    <string name="spot_dreams">Dreamt here</string>
-    <string name="spot_none">No dreams here yet.</string>
-    <string name="spot_forget">Remove place</string>
-    <string name="spot_forget_title">Remove “%1$s” from the atlas?</string>
-    <string name="spot_forget_sub">The dreams stay; their panels just lose the name.</string>
-
-    <!-- Cast -->
-    <string name="cast_sub">Everyone who keeps coming back. Built once, recognisable in every dream after.</string>
-    <string name="cast_add">Someone new</string>
-    <plurals name="appearances">
+    <!-- Signs -->
+    <string name="signs">Dream signs</string>
+    <string name="signs_sub">What keeps happening in your dreams and hardly ever when you’re awake. Spot one in a dream and you’ll know you’re dreaming. They are found in your journal by themselves.</string>
+    <string name="signs_empty">No signs yet. Each one appears once it shows up in two dreams.</string>
+    <string name="signs_yours">Yours: tap one to make it tonight’s</string>
+    <plurals name="in_dreams">
         <item quantity="one">in %d dream</item>
         <item quantity="other">in %d dreams</item>
     </plurals>
-    <string name="person_new">Someone new</string>
-    <string name="person_name_hint">Name</string>
-    <string name="person_me">That’s you. You’re in every dream.</string>
-    <string name="person_base">What are they</string>
-    <string name="person_age">Age</string>
-    <string name="person_tall">Height</string>
-    <string name="person_hair">Hair</string>
-    <string name="person_skin">Skin</string>
-    <string name="person_coat">Clothes</string>
-    <string name="person_colour">Colour</string>
-    <string name="person_traits">Something odd about them</string>
-    <string name="person_keep">Keep in the cast</string>
-    <string name="person_dismiss">Let go</string>
-    <string name="person_dismiss_title">Let %1$s go?</string>
-    <string name="person_dismiss_sub">In old dreams they become someone nameless.</string>
-    <string name="tall_0">Short</string>
-    <string name="tall_1">Medium</string>
-    <string name="tall_2">Tall</string>
+    <string name="signs_own">A sign of your own</string>
+    <string name="signs_own_hint">“the blue door”</string>
+    <string name="signs_add">Add</string>
+    <string name="signs_remove">Remove</string>
 
-    <!-- The layers, in the order of their enums -->
-    <string-array name="scenes">
-        <item>House</item>
-        <item>Room</item>
-        <item>Corridor</item>
-        <item>Stairs</item>
-        <item>Kitchen</item>
-        <item>Bathroom</item>
-        <item>School</item>
-        <item>Office</item>
-        <item>Hospital</item>
-        <item>Shop</item>
-        <item>Station</item>
-        <item>Train</item>
-        <item>Lift</item>
-        <item>Road</item>
-        <item>Street</item>
-        <item>City</item>
-        <item>Roof</item>
-        <item>Bridge</item>
-        <item>Garden</item>
-        <item>Forest</item>
-        <item>Field</item>
-        <item>Mountains</item>
-        <item>Cave</item>
-        <item>Beach</item>
-        <item>Sea</item>
-        <item>Under water</item>
-        <item>Sky</item>
-        <item>Space</item>
-        <item>Castle</item>
-        <item>Temple</item>
-        <item>Nowhere</item>
-    </string-array>
-    <string-array name="acts">
-        <item>Stands</item>
-        <item>Walks</item>
-        <item>Runs</item>
-        <item>Is chased</item>
-        <item>Falls</item>
-        <item>Flies</item>
-        <item>Floats</item>
-        <item>Swims</item>
-        <item>Sinks</item>
-        <item>Climbs</item>
-        <item>Hides</item>
-        <item>Searches</item>
-        <item>Is lost</item>
-        <item>Talks</item>
-        <item>Shouts</item>
-        <item>Sits</item>
-        <item>Sleeps</item>
-        <item>Cries</item>
-        <item>Laughs</item>
-        <item>Hugs</item>
-        <item>Fights</item>
-        <item>Dances</item>
-        <item>Opens a door</item>
-        <item>Drives</item>
-        <item>Can’t move</item>
-        <item>Grows huge</item>
-        <item>Shrinks</item>
-        <item>Watches</item>
-    </string-array>
-    <string-array name="moods">
-        <item>Calm</item>
-        <item>Joy</item>
-        <item>Wonder</item>
-        <item>Fear</item>
-        <item>Anxiety</item>
-        <item>Sadness</item>
-        <item>Anger</item>
-        <item>Strange</item>
-    </string-array>
-    <string-array name="kinds">
-        <item>Someone</item>
-        <item>A crowd</item>
-        <item>A shadow</item>
-        <item>A child</item>
-        <item>An animal</item>
-        <item>A bird</item>
-        <item>A creature</item>
-        <item>A voice</item>
-    </string-array>
-    <string-array name="bases">
-        <item>A person</item>
-        <item>An animal</item>
-        <item>A bird</item>
-        <item>A living thing</item>
-        <item>A creature</item>
-    </string-array>
-    <string-array name="ages">
-        <item>Child</item>
-        <item>Grown-up</item>
-        <item>Old</item>
-    </string-array>
-    <string-array name="hairs">
-        <item>None</item>
-        <item>Short</item>
-        <item>Long</item>
-        <item>Bun</item>
-        <item>Curly</item>
-        <item>A hat</item>
-    </string-array>
-    <string-array name="traits">
-        <item>No face</item>
-        <item>Glows</item>
-        <item>Giant</item>
-        <item>Doubled</item>
-        <item>Glasses</item>
-        <item>Beard</item>
-    </string-array>
+    <!-- Check -->
+    <string name="check_read">Read this, look away, and read it again:</string>
+    <string name="check_sign">And if you were in “%1$s” right now, would you notice?</string>
+    <string name="check_awake">I’m awake</string>
+
+    <!-- Ritual -->
+    <string name="r1_title">Recall a dream</string>
+    <string name="r1_text">Run your last dream through your head, slowly, the way it went.</string>
+    <string name="r1_none">Any dream you remember will do.</string>
+    <string name="r2_title">Tonight’s sign</string>
+    <string name="r2_text">This is what to watch for. When it comes, it’s the moment to realise you’re dreaming.</string>
+    <string name="r2_none">Tell a few dreams first; until then, your hands will do: look at them in the dream.</string>
+    <string name="r2_change">Choose another</string>
+    <string name="r3_title">Hold the top</string>
+    <string name="intention">“Next time ‘%1$s’ happens, I’ll notice I’m dreaming.”</string>
+    <string name="intention_plain">“Next time I’m dreaming, I’ll notice I’m dreaming.”</string>
+    <string name="r3_hold">Press and hold the top, repeating the words to yourself.</string>
+    <string name="r3_holding">Keep holding. Say it again, slowly.</string>
+    <string name="r4_title">Good night.</string>
+    <string name="r4_text">Fall asleep with the intention as your last thought. If you wake in the night, repeat it once.</string>
+    <string name="r4_done">Lamp off</string>
 
     <!-- Settings -->
-    <string name="set_morning">Morning</string>
+    <string name="set_checks">During the day</string>
+    <string name="set_checks_on">Reality checks</string>
+    <string name="set_checks_on_sub">“Are you dreaming?” at moments you can’t guess. The habit carries over into sleep.</string>
+    <string name="set_per_day">Checks a day</string>
+    <string name="set_from">From</string>
+    <string name="set_to">Until</string>
+    <string name="set_try">Send one now</string>
+    <string name="set_try_sub">How a check looks</string>
+    <string name="set_night">At night</string>
+    <string name="set_bedtime_on">The ritual reminder</string>
+    <string name="set_bedtime_on_sub">Half an hour before bed. Not if you’ve already done it.</string>
+    <string name="set_bedtime">I go to bed at</string>
+    <string name="set_morning">In the morning</string>
     <string name="set_morning_on">“What did you dream?”</string>
     <string name="set_morning_on_sub">One silent note when you usually wake. Not if you’ve already told a dream.</string>
     <string name="set_wake">I usually wake at</string>
-    <string name="set_try">Show it now</string>
-    <string name="set_try_sub">How the note looks</string>
-    <string name="set_battery">Let it through</string>
-    <string name="set_battery_sub">The note doesn’t come?</string>
-    <string name="set_telling">Telling</string>
     <string name="set_fade">Fading words</string>
     <string name="set_fade_sub">Pause too long and what you’re typing pales, the way a dream does. It never actually goes.</string>
+    <string name="set_battery">Let notes through</string>
+    <string name="set_battery_sub">Notes don’t come?</string>
     <string name="set_language">Language</string>
     <string name="set_lang_system">System</string>
     <string name="set_about">About</string>
-    <string name="set_privacy">Your dreams stay on this phone: no account, no internet, no tracking. Speaking a dream uses your phone’s own speech recognition.</string>
-    <string name="set_credit">The look is a tribute to Winsor McCay’s Little Nemo in Slumberland (1905–1914). Every picture is drawn by the app itself.</string>
+    <string name="set_privacy">Your dreams stay on this phone: no account, no internet, no tracking. Telling a dream aloud uses your phone’s own speech recognition.</string>
 
     <!-- Welcome -->
-    <string name="w1_title">A dream becomes a page</string>
-    <string name="w1_text">Tell the app what you dreamt, in a few words or many. It cuts the story into panels and draws each one: where you were, who was there, what happened, how it felt. Your words go underneath.</string>
-    <string name="w2_title">Your own dreamland</string>
-    <string name="w2_text">Places and people come back. Name them once and they appear on your atlas and in your cast. Nemo’s bed grows legs as you remember more mornings and walks out across the map.</string>
-    <string name="w3_title">Catch it on waking</string>
-    <string name="w3_text">A dream fades in minutes. Around the time you wake, a quiet note; the screen opens dark and dim so you can tell it half asleep.</string>
+    <string name="w1_title">In a dream, the top never falls</string>
+    <string name="w1_text">Spintop teaches you to notice, inside a dream, that you’re dreaming. You don’t need talent for that, only a habit you can learn.</string>
+    <string name="w2_title">Day, morning, night</string>
+    <string name="w2_text">A few times a day, a quiet “Are you dreaming?”. In the morning, tell your dream; the app finds your dream signs. At night, two minutes with the top and an intention.</string>
+    <string name="w3_title">The top keeps count</string>
+    <string name="w3_text">The more you practise, the longer it spins. Each lucid dream adds a brass ring, and the morning after one, the top doesn’t fall all day.</string>
 
     <!-- Widget -->
     <string name="widget_label">Tell a dream</string>

@@ -4,18 +4,23 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- A crescent moon -->
-    <path android:fillColor="#FFD98A" android:pathData="M70,26a10,10 0,1 0,8 16a8,8 0,1 1,-8 -16z" />
-    <!-- Long legs, mid-stride: the back pair darker -->
-    <path android:strokeColor="#1B1A24" android:strokeWidth="4.4" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M36,60L31,70L35,80M70,60L76,70L72,80" />
-    <path android:strokeColor="#6E4A30" android:strokeWidth="2.6" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M36,60L31,70L35,80M70,60L76,70L72,80" />
-    <path android:strokeColor="#1B1A24" android:strokeWidth="4.4" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M42,60L46,70L42,80M76,60L71,70L79,80" />
-    <path android:strokeColor="#9A6A42" android:strokeWidth="2.6" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M42,60L46,70L42,80M76,60L71,70L79,80" />
-    <!-- Headboard, mattress, pillow, blanket, footboard -->
-    <path android:fillColor="#9A6A42" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M30,61V42Q35,34 40,42V61Z" />
-    <path android:fillColor="#D9A33A" android:strokeColor="#1B1A24" android:strokeWidth="1" android:pathData="M33,37.5a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" />
-    <path android:fillColor="#FFFCF4" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M39,50H79V61H39Z" />
-    <path android:fillColor="#FFFCF4" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M40,48a6,4 0,1 0,12 0a6,4 0,1 0,-12 0" />
-    <path android:fillColor="#B8372A" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M50,49Q64,44 79,48V62H50Z" />
-    <path android:fillColor="#9A6A42" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M77,46H81V61H77Z" />
+    <!-- Shadow under the tip -->
+    <path android:fillColor="#000000" android:fillAlpha="0.45" android:pathData="M44,78.5a12,2.4 0,1 0,24 0a12,2.4 0,1 0,-24 0" />
+    <group android:rotation="7" android:pivotX="54" android:pivotY="78">
+        <!-- Stem -->
+        <path android:fillColor="#9C6B3C" android:pathData="M51.6,27h4.8v14h-4.8z" />
+        <path android:fillColor="#E8BE86" android:pathData="M52.4,28h1.4v12h-1.4z" />
+        <!-- Body, maple, lit from the left -->
+        <path android:fillColor="#D9A86C" android:pathData="M54,79L50.5,72C40,66 34,57 35,48Q54,37 73,48C74,57 68,66 57.5,72Z" />
+        <path android:fillColor="#9C6B3C" android:fillAlpha="0.55" android:pathData="M57,41.6Q66,42.6 73,48C74,57 68,66 57.5,72L54,79L56,72C64,64 67,55 63,44Z" />
+        <!-- Painted stripes -->
+        <path android:strokeColor="#B8432E" android:strokeWidth="3" android:strokeLineCap="round" android:pathData="M45,47C44,56 48,65 52.5,71" />
+        <path android:strokeColor="#2E6E73" android:strokeWidth="2.4" android:strokeLineCap="round" android:pathData="M56,46C57,55 56,64 55,71" />
+        <path android:strokeColor="#B8432E" android:strokeWidth="1.6" android:strokeLineCap="round" android:strokeAlpha="0.8" android:pathData="M66,47.5C66,55 63,63 57.5,70.5" />
+        <!-- Brass rings round the shoulder -->
+        <path android:strokeColor="#F1C66C" android:strokeWidth="1.6" android:strokeLineCap="round" android:pathData="M36,47.5Q54,54 72,47.5" />
+        <path android:strokeColor="#F1C66C" android:strokeWidth="1.6" android:strokeLineCap="round" android:pathData="M37.5,44.5Q54,50.5 70.5,44.5" />
+        <!-- Steel tip -->
+        <path android:fillColor="#B9B7B0" android:pathData="M54,79.5L51.6,74.5H56.4Z" />
+    </group>
 </vector>

@@ -15,7 +15,7 @@ import app.slumber.ui.theme.SlumberTheme
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val style = SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT)
+        val style = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
         enableEdgeToEdge(statusBarStyle = style, navigationBarStyle = style)
         if (savedInstanceState == null) opened(intent)
         setContent {
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         opened(intent)
     }
 
-    /** A tap on the morning note or the widget: remember where it wants to go. */
+    /** A tap on a note or the widget: remember where it wants to go. */
     private fun opened(intent: Intent?) {
         val open = intent?.getStringExtra(EXTRA_OPEN) ?: return
         container.open.value = open to System.currentTimeMillis()
@@ -41,5 +41,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_OPEN = "open"
         const val OPEN_CAPTURE = "capture"
+        const val OPEN_CHECK = "check"
+        const val OPEN_RITUAL = "ritual"
     }
 }

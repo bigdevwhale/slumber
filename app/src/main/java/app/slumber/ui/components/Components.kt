@@ -74,9 +74,9 @@ fun SectionTitle(text: String, modifier: Modifier = Modifier) {
     Text(text.uppercase(), style = UType.Eyebrow, modifier = modifier.padding(start = 4.dp, top = 24.dp, bottom = 10.dp))
 }
 
-/** Banner red, for the thing to do next. */
+/** Lamplight, for the thing to do next. */
 @Composable
-fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, color: Color = U.c.red, icon: ImageVector? = null, content: Color = U.c.onRed) {
+fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true, color: Color = U.c.lamp, icon: ImageVector? = null, content: Color = U.c.onLamp) {
     Button(
         onClick = onClick,
         enabled = enabled,
@@ -94,7 +94,7 @@ fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifi
 
 /** Quiet, for the second thing. */
 @Composable
-fun SoftButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, color: Color = U.c.red, soft: Color = U.c.redSoft, icon: ImageVector? = null, enabled: Boolean = true) {
+fun SoftButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, color: Color = U.c.lamp, soft: Color = U.c.lampSoft, icon: ImageVector? = null, enabled: Boolean = true) {
     Row(
         modifier
             .height(50.dp)
@@ -115,7 +115,7 @@ fun SoftButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier,
 }
 
 @Composable
-fun Chip(text: String, selected: Boolean, onClick: () -> Unit, color: Color = U.c.red) {
+fun Chip(text: String, selected: Boolean, onClick: () -> Unit, color: Color = U.c.lamp) {
     FilterChip(
         selected = selected,
         onClick = onClick,
@@ -141,16 +141,16 @@ fun <T> Segmented(options: List<T>, selected: T, label: @Composable (T) -> Strin
                     .weight(1f)
                     .height(42.dp)
                     .clip(U.RSm)
-                    .background(if (on) U.c.redSoft else Color.Transparent)
+                    .background(if (on) U.c.lampSoft else Color.Transparent)
                     .clickable { onSelect(o) },
                 contentAlignment = Alignment.Center,
-            ) { Text(label(o), style = UType.Button.copy(fontSize = 15.sp), color = if (on) U.c.red else U.c.muted, maxLines = 1) }
+            ) { Text(label(o), style = UType.Button.copy(fontSize = 15.sp), color = if (on) U.c.lamp else U.c.muted, maxLines = 1) }
         }
     }
 }
 
 @Composable
-fun IconDisc(icon: ImageVector, size: Dp = 44.dp, color: Color = U.c.red, soft: Color = U.c.redSoft) {
+fun IconDisc(icon: ImageVector, size: Dp = 44.dp, color: Color = U.c.lamp, soft: Color = U.c.lampSoft) {
     Box(Modifier.size(size).clip(CircleShape).background(soft), contentAlignment = Alignment.Center) {
         Icon(icon, null, Modifier.size(size * 0.5f), tint = color)
     }
@@ -192,7 +192,7 @@ fun Toggle(title: String, sub: String, on: Boolean, onChange: (Boolean) -> Unit)
             if (sub.isNotEmpty()) Text(sub, style = UType.Muted)
         }
         Spacer(Modifier.width(12.dp))
-        Switch(on, onChange, colors = SwitchDefaults.colors(checkedTrackColor = U.c.red, checkedThumbColor = U.c.onRed, uncheckedTrackColor = U.c.surface2, uncheckedBorderColor = U.c.line, uncheckedThumbColor = U.c.faint))
+        Switch(on, onChange, colors = SwitchDefaults.colors(checkedTrackColor = U.c.lamp, checkedThumbColor = U.c.onLamp, uncheckedTrackColor = U.c.surface2, uncheckedBorderColor = U.c.line, uncheckedThumbColor = U.c.faint))
     }
 }
 

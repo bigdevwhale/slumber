@@ -54,8 +54,6 @@ import androidx.compose.ui.unit.sp
 import app.slumber.R
 import app.slumber.container
 import app.slumber.data.Dream
-import app.slumber.domain.Guess
-import app.slumber.domain.Mood
 import app.slumber.ui.Book
 import app.slumber.ui.Go
 import app.slumber.ui.T
@@ -135,14 +133,11 @@ fun CaptureScreen(book: Book, go: Go) {
         val container = c.container
         scope.launch {
             val id = withContext(Dispatchers.IO) {
-                val me = container.db.dao().me()?.id ?: 0L
-                val drafts = Guess.panels(told, me, book.named, book.places)
-                val mood = drafts.groupingBy { it.mood }.eachCount().maxByOrNull { it.value }?.key ?: Mood.WONDER
-                val id = container.db.dao().tell(Dream(text = told, mood = mood.name), drafts)
+                val id = container.db.dao().insert(Dream(text = told))
                 container.settings.update { it.copy(draft = "") }
                 id
             }
-            go.dream(id, fresh = true)
+            go.clarity(id)
         }
     }
 

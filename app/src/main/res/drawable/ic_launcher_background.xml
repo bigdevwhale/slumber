@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <path android:fillColor="#26305A" android:pathData="M0,0h108v108h-108z" />
-    <path android:fillColor="#3A4677" android:pathData="M0,78C30,72 70,82 108,74V108H0Z" />
-    <path android:fillColor="#FFF4C8" android:pathData="M28,30m-1.2,0a1.2,1.2 0,1 1,2.4 0a1.2,1.2 0,1 1,-2.4 0" />
-    <path android:fillColor="#FFF4C8" android:pathData="M80,24m-1,0a1,1 0,1 1,2 0a1,1 0,1 1,-2 0" />
-    <path android:fillColor="#FFF4C8" android:pathData="M86,44m-1.2,0a1.2,1.2 0,1 1,2.4 0a1.2,1.2 0,1 1,-2.4 0" />
-    <path android:fillColor="#FFF4C8" android:pathData="M22,50m-0.9,0a0.9,0.9 0,1 1,1.8 0a0.9,0.9 0,1 1,-1.8 0" />
+    <path android:fillColor="#15100C" android:pathData="M0,0h108v108h-108z" />
+    <!-- The lamp's warm pool -->
+    <path android:pathData="M0,0h108v108h-108z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="radial"
+                android:centerX="44"
+                android:centerY="70"
+                android:gradientRadius="62"
+                android:startColor="#7A5130"
+                android:endColor="#0015100C" />
+        </aapt:attr>
+    </path>
+    <!-- The tabletop's edge -->
+    <path android:fillColor="#2A1B10" android:fillAlpha="0.6" android:pathData="M0,76h108v32h-108z" />
 </vector>

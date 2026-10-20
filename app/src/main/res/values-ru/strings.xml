@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Дрёма</string>
+    <string name="settings">Настройки</string>
+    <string name="back">Назад</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">Готово</string>
+    <string name="next">Дальше</string>
+    <string name="start">Начать</string>
+    <string name="me">Я</string>
+
+    <!-- Morning note -->
+    <string name="channel">Утро</string>
+    <string name="channel_desc">Одно тихое «Что снилось?» в час, когда вы обычно просыпаетесь</string>
+    <string name="morning_title">Что снилось?</string>
+    <string name="morning_text">Расскажите сейчас, пока не растаяло. Обрывки тоже годятся.</string>
+
+    <!-- Tabs -->
+    <string name="tab_dreams">Сны</string>
+    <string name="tab_atlas">Атлас</string>
+    <string name="tab_cast">Труппа</string>
+
+    <!-- Home -->
+    <string name="tell">Что снилось?</string>
+    <string name="empty_title">Альбом пока пуст</string>
+    <string name="empty_sub">Завтра утром, ещё не вставая, расскажите, что снилось. Из сна получится страница.</string>
+    <string name="rehearse_title">Перечитайте новый конец</string>
+    <string name="rehearse_sub">Перед сном прокрутите в голове переписанный сон. Так старый понемногу отпускает.</string>
+    <string name="returning_title">«%1$s» снова здесь</string>
+    <plurals name="returning_sub">
+        <item quantity="one">Уже в %d сне. Добавить в труппу?</item>
+        <item quantity="few">Уже в %d снах. Добавить в труппу?</item>
+        <item quantity="many">Уже в %d снах. Добавить в труппу?</item>
+        <item quantity="other">Уже в %d снах. Добавить в труппу?</item>
+    </plurals>
+    <string name="rewritten_mark">новый конец</string>
+    <plurals name="mornings">
+        <item quantity="one">%d утро со сном</item>
+        <item quantity="few">%d утра со сном</item>
+        <item quantity="many">%d утр со сном</item>
+        <item quantity="other">%d утра со сном</item>
+    </plurals>
+    <plurals name="bed_next">
+        <item quantity="one">Ещё %d утро, и она изменится.</item>
+        <item quantity="few">Ещё %d утра, и она изменится.</item>
+        <item quantity="many">Ещё %d утр, и она изменится.</item>
+        <item quantity="other">Ещё %d утра, и она изменится.</item>
+    </plurals>
+    <string-array name="bed_stages">
+        <item>Кровать крепко спит.</item>
+        <item>Кровать заворочалась, у неё выросли ножки.</item>
+        <item>Кровать встала на ноги.</item>
+        <item>Кровать уходит гулять по Стране Дрёмы.</item>
+        <item>Кровать шагает по крышам на длинных ногах.</item>
+    </string-array>
+
+    <!-- Capture -->
+    <string name="capture_hint">Что снилось? Можно обрывками: место, лицо, чувство…</string>
+    <string name="capture_speak">Рассказать вслух</string>
+    <string name="capture_keep">Сохранить сон</string>
+    <string name="capture_fading">Слова тают, как сон. Пишите дальше: одна буква, и они вернутся.</string>
+
+    <!-- The page -->
+    <string name="masthead">В Стране Дрёмы</string>
+    <string name="woke">…и тут я открываю глаза.</string>
+    <string name="side_new">Новый конец</string>
+    <string name="side_old">Как приснилось</string>
+    <string name="dream_edit">Собрать страницу</string>
+    <string name="dream_rewrite">Переписать конец</string>
+    <string name="dream_rewrite_again">Изменить конец</string>
+    <string name="dream_rewrite_why">Повторяющиеся плохие сны можно ослабить: придумайте этому новый конец и перечитывайте его перед сном несколько вечеров.</string>
+    <string name="dream_told">Как записано</string>
+    <string name="dream_name">Назвать сон</string>
+    <string name="dream_name_hint">«Бесконечный коридор»</string>
+    <string name="dream_forget">Забыть</string>
+    <string name="dream_forget_title">Забыть этот сон?</string>
+    <string name="dream_forget_sub">Страница и слова исчезнут насовсем.</string>
+    <string name="lucid">Осознанный сон</string>
+    <string name="lucid_sub">Во сне было ясно, что это сон. На шапке появится звезда.</string>
+
+    <!-- Editing -->
+    <string name="edit_title">Собрать страницу</string>
+    <string name="edit_title_new">Новый конец</string>
+    <string name="edit_new_hint">Поменяйте последние кадры, чтобы всё закончилось иначе: вы оборачиваетесь, дверь открывается на море, тень оказывается пальто. Старый конец останется на изнанке страницы.</string>
+    <string name="edit_add">Добавить кадр</string>
+    <string name="edit_empty">Кадров пока нет.</string>
+    <string name="edit_left">Раньше</string>
+    <string name="edit_right">Позже</string>
+    <string name="edit_remove">Убрать кадр</string>
+    <string name="edit_resplit">Собрать заново из слов</string>
+    <string name="edit_resplit_sub">Кадры будут заново сделаны из рассказа. Правки этой страницы пропадут.</string>
+    <string name="l_where">Где</string>
+    <string name="l_who">Кто</string>
+    <string name="l_what">Что</string>
+    <string name="l_feel">Как</string>
+    <string name="l_words">Слова</string>
+    <string name="l_draw">Рисунок</string>
+    <string name="where_atlas">Ваши места</string>
+    <string name="where_kinds">Какое место</string>
+    <string name="where_name">Назвать это место</string>
+    <string name="where_rename">Переименовать место</string>
+    <string name="where_name_title">Своё место</string>
+    <string name="where_name_sub">Если это место снится снова и снова, дайте ему имя, и оно появится в атласе.</string>
+    <string name="where_name_hint">«Бабушкин дом, но больше»</string>
+    <string name="who_here">В этом кадре</string>
+    <string name="who_cast">Из труппы</string>
+    <string name="who_extras">Кто-то безымянный</string>
+    <string name="who_new">Новый персонаж</string>
+    <string name="who_remove">Убрать</string>
+    <string name="who_label_hint">Нажмите на безымянного, чтобы подписать, кто это был. Если появится снова, его можно взять в труппу.</string>
+    <string name="who_label_placeholder">«человек у двери»</string>
+    <string name="words_hint">Что происходит в этом кадре</string>
+    <string name="draw_hint">Того, что приснилось, нет ни в одном списке? Нарисуйте пальцем прямо в кадре. Замкнутая линия закрасится.</string>
+    <string name="draw_undo">Отменить</string>
+    <string name="draw_clear">Стереть</string>
+
+    <!-- Atlas -->
+    <string name="atlas_empty_title">У Страны Дрёмы пока нет карты</string>
+    <string name="atlas_empty_sub">Сны часто возвращаются в одни и те же места: та школа, дом с лишними комнатами, бесконечный вокзал. Когда собираете страницу, назовите место, и оно появится здесь. Если сон переходит из одного места в другое, между ними появляется дверь.</string>
+    <string name="atlas_hint">Карту можно двигать и приближать. Туман рассеивается, когда кровать уходит дальше.</string>
+    <string name="atlas_places">Места</string>
+    <plurals name="dreams_here">
+        <item quantity="one">%d сон</item>
+        <item quantity="few">%d сна</item>
+        <item quantity="many">%d снов</item>
+        <item quantity="other">%d сна</item>
+    </plurals>
+    <string name="spot_doors">Двери в</string>
+    <string name="spot_dreams">Здесь снилось</string>
+    <string name="spot_none">Пока ни одного сна.</string>
+    <string name="spot_forget">Убрать место</string>
+    <string name="spot_forget_title">Убрать «%1$s» из атласа?</string>
+    <string name="spot_forget_sub">Сны останутся, их кадры просто потеряют имя места.</string>
+
+    <!-- Cast -->
+    <string name="cast_sub">Все, кто приходит снова и снова. Собираются один раз и узнаются в любом сне.</string>
+    <string name="cast_add">Новый персонаж</string>
+    <plurals name="appearances">
+        <item quantity="one">в %d сне</item>
+        <item quantity="few">в %d снах</item>
+        <item quantity="many">в %d снах</item>
+        <item quantity="other">в %d снах</item>
+    </plurals>
+    <string name="person_new">Новый персонаж</string>
+    <string name="person_name_hint">Имя</string>
+    <string name="person_me">Это вы. Вы есть в каждом сне.</string>
+    <string name="person_base">Кто это</string>
+    <string name="person_age">Возраст</string>
+    <string name="person_tall">Рост</string>
+    <string name="person_hair">Волосы</string>
+    <string name="person_skin">Кожа</string>
+    <string name="person_coat">Одежда</string>
+    <string name="person_colour">Цвет</string>
+    <string name="person_traits">Что-то странное</string>
+    <string name="person_keep">Взять в труппу</string>
+    <string name="person_dismiss">Отпустить</string>
+    <string name="person_dismiss_title">Отпустить: %1$s?</string>
+    <string name="person_dismiss_sub">В старых снах станет кем-то безымянным.</string>
+    <string name="tall_0">Ниже среднего</string>
+    <string name="tall_1">Средний</string>
+    <string name="tall_2">Выше среднего</string>
+
+    <!-- The layers, in the order of their enums -->
+    <string-array name="scenes">
+        <item>Дом</item>
+        <item>Комната</item>
+        <item>Коридор</item>
+        <item>Лестница</item>
+        <item>Кухня</item>
+        <item>Ванная</item>
+        <item>Школа</item>
+        <item>Офис</item>
+        <item>Больница</item>
+        <item>Магазин</item>
+        <item>Вокзал</item>
+        <item>Поезд</item>
+        <item>Лифт</item>
+        <item>Дорога</item>
+        <item>Улица</item>
+        <item>Город</item>
+        <item>Крыша</item>
+        <item>Мост</item>
+        <item>Сад</item>
+        <item>Лес</item>
+        <item>Поле</item>
+        <item>Горы</item>
+        <item>Пещера</item>
+        <item>Пляж</item>
+        <item>Море</item>
+        <item>Под водой</item>
+        <item>Небо</item>
+        <item>Космос</item>
+        <item>Замок</item>
+        <item>Храм</item>
+        <item>Нигде</item>
+    </string-array>
+    <string-array name="acts">
+        <item>Стоит</item>
+        <item>Идёт</item>
+        <item>Бежит</item>
+        <item>Погоня</item>
+        <item>Падает</item>
+        <item>Летит</item>
+        <item>Парит</item>
+        <item>Плывёт</item>
+        <item>Тонет</item>
+        <item>Лезет</item>
+        <item>Прячется</item>
+        <item>Ищет</item>
+        <item>Не найти дорогу</item>
+        <item>Говорит</item>
+        <item>Кричит</item>
+        <item>Сидит</item>
+        <item>Спит</item>
+        <item>Плачет</item>
+        <item>Смеётся</item>
+        <item>Обнимает</item>
+        <item>Дерётся</item>
+        <item>Танцует</item>
+        <item>Открывает дверь</item>
+        <item>Едет</item>
+        <item>Не может двинуться</item>
+        <item>Растёт до неба</item>
+        <item>Уменьшается</item>
+        <item>Смотрит</item>
+    </string-array>
+    <string-array name="moods">
+        <item>Спокойно</item>
+        <item>Радостно</item>
+        <item>Чудесно</item>
+        <item>Страшно</item>
+        <item>Тревожно</item>
+        <item>Грустно</item>
+        <item>Злость</item>
+        <item>Странно</item>
+    </string-array>
+    <string-array name="kinds">
+        <item>Кто-то</item>
+        <item>Толпа</item>
+        <item>Тень</item>
+        <item>Ребёнок</item>
+        <item>Зверь</item>
+        <item>Птица</item>
+        <item>Существо</item>
+        <item>Голос</item>
+    </string-array>
+    <string-array name="bases">
+        <item>Человек</item>
+        <item>Зверь</item>
+        <item>Птица</item>
+        <item>Ожившая вещь</item>
+        <item>Существо</item>
+    </string-array>
+    <string-array name="ages">
+        <item>Ребёнок</item>
+        <item>Средних лет</item>
+        <item>В годах</item>
+    </string-array>
+    <string-array name="hairs">
+        <item>Нет</item>
+        <item>Короткие</item>
+        <item>Длинные</item>
+        <item>Пучок</item>
+        <item>Кудри</item>
+        <item>Шляпа</item>
+    </string-array>
+    <string-array name="traits">
+        <item>Без лица</item>
+        <item>Светится</item>
+        <item>Великан</item>
+        <item>Двоится</item>
+        <item>Очки</item>
+        <item>Борода</item>
+    </string-array>
+
+    <!-- Settings -->
+    <string name="set_morning">Утро</string>
+    <string name="set_morning_on">«Что снилось?»</string>
+    <string name="set_morning_on_sub">Одно беззвучное уведомление, когда вы обычно просыпаетесь. Не приходит, если сон уже записан.</string>
+    <string name="set_wake">Обычно просыпаюсь в</string>
+    <string name="set_try">Показать сейчас</string>
+    <string name="set_try_sub">Как оно выглядит</string>
+    <string name="set_battery">Пропускать уведомления</string>
+    <string name="set_battery_sub">Уведомление не приходит?</string>
+    <string name="set_telling">Запись</string>
+    <string name="set_fade">Тающие слова</string>
+    <string name="set_fade_sub">Если надолго замолчать, набранное бледнеет, как сон. На самом деле ничего не пропадает.</string>
+    <string name="set_language">Язык</string>
+    <string name="set_lang_system">Системный</string>
+    <string name="set_about">О приложении</string>
+    <string name="set_privacy">Сны остаются на этом телефоне: без аккаунта, без интернета, без слежки. Для рассказа вслух используется распознавание речи самого телефона.</string>
+    <string name="set_credit">Оформление — поклон «Малышу Немо в Стране Снов» Уинзора Маккея (1905–1914). Все картинки рисует само приложение.</string>
+
+    <!-- Welcome -->
+    <string name="w1_title">Сон становится страницей</string>
+    <string name="w1_text">Расскажите, что снилось, парой слов или подробно. Приложение разрежет рассказ на кадры и нарисует каждый: где вы были, кто был рядом, что происходило, как это ощущалось. Ваши слова пойдут подписями.</string>
+    <string name="w2_title">Своя Страна Дрёмы</string>
+    <string name="w2_text">Места и люди возвращаются. Назовите их один раз, и они появятся в атласе и в труппе. А кровать Немо отращивает ноги с каждым вспомненным утром и уходит гулять по карте.</string>
+    <string name="w3_title">Поймать сразу</string>
+    <string name="w3_text">Сон тает за минуты. В час, когда вы просыпаетесь, придёт тихое уведомление, а экран откроется тёмным и тусклым, чтобы рассказывать в полусне.</string>
+
+    <!-- Widget -->
+    <string name="widget_label">Записать сон</string>
+    <string name="widget_title">Что снилось?</string>
+    <string name="widget_sub">Расскажите, пока не растаяло</string>
+</resources>

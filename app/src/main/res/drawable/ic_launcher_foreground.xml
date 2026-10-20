@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- A crescent moon -->
+    <path android:fillColor="#FFD98A" android:pathData="M70,26a10,10 0,1 0,8 16a8,8 0,1 1,-8 -16z" />
+    <!-- Long legs, mid-stride: the back pair darker -->
+    <path android:strokeColor="#1B1A24" android:strokeWidth="4.4" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M36,60L31,70L35,80M70,60L76,70L72,80" />
+    <path android:strokeColor="#6E4A30" android:strokeWidth="2.6" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M36,60L31,70L35,80M70,60L76,70L72,80" />
+    <path android:strokeColor="#1B1A24" android:strokeWidth="4.4" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M42,60L46,70L42,80M76,60L71,70L79,80" />
+    <path android:strokeColor="#9A6A42" android:strokeWidth="2.6" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M42,60L46,70L42,80M76,60L71,70L79,80" />
+    <!-- Headboard, mattress, pillow, blanket, footboard -->
+    <path android:fillColor="#9A6A42" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M30,61V42Q35,34 40,42V61Z" />
+    <path android:fillColor="#D9A33A" android:strokeColor="#1B1A24" android:strokeWidth="1" android:pathData="M33,37.5a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" />
+    <path android:fillColor="#FFFCF4" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M39,50H79V61H39Z" />
+    <path android:fillColor="#FFFCF4" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M40,48a6,4 0,1 0,12 0a6,4 0,1 0,-12 0" />
+    <path android:fillColor="#B8372A" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M50,49Q64,44 79,48V62H50Z" />
+    <path android:fillColor="#9A6A42" android:strokeColor="#1B1A24" android:strokeWidth="1.4" android:pathData="M77,46H81V61H77Z" />
+</vector>

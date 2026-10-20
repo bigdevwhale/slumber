@@ -176,7 +176,9 @@ fun EditScreen(id: Long, alt: Int, book: Book, go: Go) {
                                 onDragStart = { o -> live = listOf(Doodle.P(o.x / size.width, o.y / size.height)) },
                                 onDrag = { ch, _ -> live = live + Doodle.P((ch.position.x / size.width).coerceIn(0f, 1f), (ch.position.y / size.height).coerceIn(0f, 1f)) },
                                 onDragEnd = {
-                                    if (live.size > 1) change(p.copy(doodle = Doodle.encode(strokes + listOf(live))))
+                                    // Read the panel as it is now: this handler outlives the panel it began with.
+                                    val cur = list.getOrNull(sel)
+                                    if (cur != null && live.size > 1) change(cur.copy(doodle = Doodle.encode(Doodle.decode(cur.doodle) + listOf(live))))
                                     live = emptyList()
                                 },
                             )

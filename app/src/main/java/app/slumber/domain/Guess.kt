@@ -146,10 +146,18 @@ object Guess {
         return if (at.all { it >= 0 }) at.max() else -1
     }
 
-    /** The last place mentioned wins: dreams move, and the panel shows where it ended up. */
+    private val vehicles = setOf(Scene.TRAIN, Scene.CAR, Scene.ELEVATOR)
+
+    /**
+     * The last place mentioned wins: dreams move, and the panel shows where it ended up. A train or a car
+     * named beside a place is usually something seen there ("at the station, the train was leaving"), so
+     * it only wins alone.
+     */
     fun scene(raw: String): Scene? {
         val t = Text(raw)
-        return scenes.map { (s, st) -> s to t.last(st) }.filter { it.second >= 0 }.maxByOrNull { it.second }?.first
+        val hits = scenes.map { (s, st) -> s to t.last(st) }.filter { it.second >= 0 }
+        val places = hits.filter { it.first !in vehicles }.ifEmpty { hits }
+        return places.maxByOrNull { it.second }?.first
     }
 
     fun act(raw: String): Act? {

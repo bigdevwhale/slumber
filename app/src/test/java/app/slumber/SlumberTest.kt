@@ -56,6 +56,8 @@ class GuessTest {
         assertEquals(Mood.FEAR, Guess.mood("за мной идёт кто-то без лица"))
         assertEquals(listOf(Kind.SHADOW), Guess.kinds("за мной идёт кто-то без лица"))
         assertEquals(Scene.STATION, Guess.scene("I was late at the station"))
+        assertEquals(Scene.STATION, Guess.scene("I was at the station, the train was leaving"))
+        assertEquals(Scene.TRAIN, Guess.scene("I sat in a train"))
         assertEquals(Mood.ANXIETY, Guess.mood("I was late for an exam"))
         // "город" is a city, not a mountain.
         assertEquals(Scene.CITY, Guess.scene("гуляю по городу"))

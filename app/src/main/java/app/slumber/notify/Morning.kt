@@ -37,6 +37,7 @@ object Morning {
     private const val ID = 5
     internal const val FIRE = "app.slumber.notify.MORNING"
     private const val TIMEOUT_MS = 60 * 60_000L
+    private const val WINDOW_MS = 10 * 60_000L
 
     fun canNotify(context: Context): Boolean =
         Build.VERSION.SDK_INT < 33 ||
@@ -79,7 +80,9 @@ object Morning {
             am.cancel(p)
             return
         }
-        am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at.atZone(zone).toInstant().toEpochMilli(), p)
+        // A dream fades in minutes: setAndAllowWhileIdle may come an hour late, so ask for a ten-minute window
+        // (no exact-alarm permission needed). At waking the phone is picked up, which ends Doze anyway.
+        am.setWindow(AlarmManager.RTC_WAKEUP, at.atZone(zone).toInstant().toEpochMilli(), WINDOW_MS, p)
     }
 
     suspend fun fire(context: Context) {

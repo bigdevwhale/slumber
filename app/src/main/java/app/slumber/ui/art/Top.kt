@@ -59,9 +59,9 @@ fun DrawScope.desk(cx: Float = 0.5f, table: Float = 0.7f, seed: Int = 3) {
     drawRect(Brush.verticalGradient(listOf(Color(0xFF120D0A), Color(0xFF1F1610)), endY = table * h), size = Size(w, table * h))
     // A window, top right: night blue, a moon, a few stars, the frame's cross.
     val wx0 = w * 0.64f
-    val wy0 = h * 0.08f
+    val wy0 = h * 0.15f
     val ww = w * 0.27f
-    val wh = h * 0.3f
+    val wh = h * 0.26f
     drawRect(Color(0xFF2A1E15), Offset(wx0 - 6f, wy0 - 6f), Size(ww + 12f, wh + 12f))
     drawRect(Brush.verticalGradient(listOf(Color(0xFF1B2741), Color(0xFF2E3D5E)), startY = wy0, endY = wy0 + wh), Offset(wx0, wy0), Size(ww, wh))
     val r = Random(seed)
@@ -96,7 +96,7 @@ fun DrawScope.desk(cx: Float = 0.5f, table: Float = 0.7f, seed: Int = 3) {
 fun DrawScope.top(p: TopPose, cx: Float = 0.5f, cy: Float = 0.8f, tall: Float = 0.38f) {
     val w = size.width
     val h = size.height
-    val pivot = Offset(cx * w, cy * h)
+    var pivot = Offset(cx * w, cy * h)
     val H = tall * h
     val t = Math.toRadians(p.tilt.toDouble()).toFloat()
     // The axis, leaning by tilt toward precession; leaning to or from you foreshortens it a little.
@@ -107,9 +107,16 @@ fun DrawScope.top(p: TopPose, cx: Float = 0.5f, cy: Float = 0.8f, tall: Float = 
     val n = Offset(-a.y, a.x)
     fun at(u: Float, v: Float) = pivot + a * (u * H) + n * (v * H)
 
+    // Leaning far over, it rests on its side: lift it so nothing goes through the table, and bring it
+    // back towards the middle as it lies down.
+    val lowest = (0..20).maxOf { i -> val u = i / 20f; maxOf(at(u, -radius(u)).y, at(u, radius(u)).y) }
+    val lie = ((p.tilt - 25f) / 51f).coerceIn(0f, 1f)
+    pivot += Offset((cx * w - at(0.45f, 0f).x) * lie, -(lowest - pivot.y).coerceAtLeast(0f))
+
     // Shadow on the table, thrown away from the lamp.
     val sw = H * (0.42f + 0.6f * sin(t))
-    drawOval(Color.Black.copy(alpha = 0.45f), Offset(pivot.x - sw * 0.3f, pivot.y - H * 0.03f), Size(sw, H * 0.08f))
+    val under = at(0.4f * sin(t), 0f).x
+    drawOval(Color.Black.copy(alpha = 0.45f), Offset(under - sw / 2, cy * h - H * 0.03f), Size(sw, H * 0.08f))
 
     // The day after a lucid dream: a warm halo, and a ring of light on the table round the tip.
     if (p.glow > 0f) {

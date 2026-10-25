@@ -38,6 +38,7 @@ import app.slumber.ui.Go
 import app.slumber.ui.Language
 import app.slumber.ui.T
 import app.slumber.ui.components.Chip
+import app.slumber.ui.components.CommunityLinks
 import app.slumber.ui.components.InfoRow
 import app.slumber.ui.components.SectionTitle
 import app.slumber.ui.components.Segmented
@@ -136,6 +137,8 @@ fun SettingsScreen(book: Book, go: Go) {
                 Chip("English", cur == Language.EN, { Language.set(Language.EN) })
                 Chip("Русский", cur == Language.RU, { Language.set(Language.RU) })
             }
+
+            CommunityLinks()
 
             SectionTitle(stringResource(R.string.set_about))
             Text(stringResource(R.string.set_privacy), style = UType.Sub)

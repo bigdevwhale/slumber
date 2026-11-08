@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.slumber.R
+import app.slumber.ui.components.TimeField
 import app.slumber.container
 import app.slumber.data.Settings
 import app.slumber.notify.Notes
@@ -82,13 +83,10 @@ fun SettingsScreen(book: Book, go: Go) {
                     Spacer(Modifier.height(8.dp))
                     Segmented(PER_DAY, s.perDay, { it.toString() }, { n -> set { it.copy(perDay = n) } })
                     Spacer(Modifier.height(14.dp))
-                    Text(stringResource(R.string.set_from), style = UType.Strong)
+                    // Any times, and the window may cross midnight: from 13:00 to 03:00 for a night owl (#1).
+                    TimeField(stringResource(R.string.set_from), s.from) { m -> set { it.copy(from = m) } }
                     Spacer(Modifier.height(8.dp))
-                    Segmented(CHECK_FROM, s.from / 60, { T.time(it * 60) }, { h -> set { it.copy(from = h * 60) } })
-                    Spacer(Modifier.height(12.dp))
-                    Text(stringResource(R.string.set_to), style = UType.Strong)
-                    Spacer(Modifier.height(8.dp))
-                    Segmented(CHECK_TO, s.to / 60, { T.time(it * 60) }, { h -> set { it.copy(to = h * 60) } })
+                    TimeField(stringResource(R.string.set_to), s.to) { m -> set { it.copy(to = m) } }
                 }
                 InfoRow(Icons.Rounded.NotificationsActive, stringResource(R.string.set_try_sub), stringResource(R.string.set_try)) {
                     if (Notes.canNotify(c)) Notes.check(c)
@@ -100,11 +98,7 @@ fun SettingsScreen(book: Book, go: Go) {
             UCard {
                 Toggle(stringResource(R.string.set_bedtime_on), stringResource(R.string.set_bedtime_on_sub), s.bedtimeNote) { v -> set { it.copy(bedtimeNote = v) } }
                 Spacer(Modifier.height(10.dp))
-                Text(stringResource(R.string.set_bedtime), style = UType.Strong)
-                Spacer(Modifier.height(8.dp))
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    BEDTIMES.forEach { m -> Chip(T.time(m), s.bedtime == m, { set { it.copy(bedtime = m) } }) }
-                }
+                TimeField(stringResource(R.string.set_bedtime), s.bedtime) { m -> set { it.copy(bedtime = m) } }
             }
 
             SectionTitle(stringResource(R.string.set_morning))
@@ -112,11 +106,7 @@ fun SettingsScreen(book: Book, go: Go) {
                 Toggle(stringResource(R.string.set_morning_on), stringResource(R.string.set_morning_on_sub), s.morning) { v -> set { it.copy(morning = v) } }
                 if (s.morning) {
                     Spacer(Modifier.height(10.dp))
-                    Text(stringResource(R.string.set_wake), style = UType.Strong)
-                    Spacer(Modifier.height(8.dp))
-                    FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        WAKE_TIMES.forEach { m -> Chip(T.time(m), s.wake == m, { set { it.copy(wake = m) } }) }
-                    }
+                    TimeField(stringResource(R.string.set_wake), s.wake) { m -> set { it.copy(wake = m) } }
                 }
                 Spacer(Modifier.height(8.dp))
                 Toggle(stringResource(R.string.set_fade), stringResource(R.string.set_fade_sub), s.fade) { v -> set { it.copy(fade = v) } }

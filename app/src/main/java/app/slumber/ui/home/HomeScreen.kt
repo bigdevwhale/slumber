@@ -63,8 +63,10 @@ fun HomeScreen(book: Book, go: Go) {
     val s = book.settings
     val minute = LocalTime.now().let { it.hour * 60 + it.minute }
     val next = when {
-        !book.dreamtToday && minute < 13 * 60 && minute >= 4 * 60 -> Next.DREAM
-        !book.ritualToday && (minute >= s.bedtime - 120 || minute < 4 * 60) -> Next.RITUAL
+        // Around one's own waking and bedtime, whatever the hours (#1): from 3½ h before waking to 5½ h after,
+        // and from 2 h before bed to 5 h after.
+        !book.dreamtToday && Math.floorMod(minute - s.wake + 210, 1440) < 540 -> Next.DREAM
+        !book.ritualToday && Math.floorMod(minute - s.bedtime + 120, 1440) < 420 -> Next.RITUAL
         else -> Next.CHECK
     }
 

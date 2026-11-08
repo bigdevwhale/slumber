@@ -83,4 +83,12 @@ class SpinTest {
         assertEquals(5, times.size)
         assertTrue(times.all { it in 600 until 1260 })
     }
+    @Test fun `a night owl's checks run past midnight`() {
+        val times = Plan.of(today, 13 * 60, 3 * 60, 6, 42)
+        assertEquals(6, times.size)
+        assertTrue(times.all { it in 13 * 60 until 27 * 60 })
+        assertTrue(times.any { it >= 1440 })
+        val next = Plan.next(today.atTime(23, 59), 13 * 60, 3 * 60, 6, 42)!!
+        assertTrue(next.toLocalDate() == today.plusDays(1) && next.hour < 3)
+    }
 }

@@ -35,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.slumber.R
+import app.slumber.ui.components.TimeField
 import app.slumber.container
 import app.slumber.notify.Notes
 import app.slumber.ui.T
@@ -79,17 +80,9 @@ fun WelcomeScreen(onDone: () -> Unit) {
                 Text(stringResource(listOf(R.string.w1_text, R.string.w2_text, R.string.w3_text)[p]), style = UType.Sub)
                 if (p == 2) {
                     Spacer(Modifier.height(14.dp))
-                    Text(stringResource(R.string.set_bedtime), style = UType.Small)
-                    Spacer(Modifier.height(6.dp))
-                    Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        BEDTIMES.forEach { m -> Chip(T.time(m), bed == m, { bed = m }) }
-                    }
-                    Spacer(Modifier.height(10.dp))
-                    Text(stringResource(R.string.set_wake), style = UType.Small)
-                    Spacer(Modifier.height(6.dp))
-                    Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        WAKE_TIMES.forEach { m -> Chip(T.time(m), wake == m, { wake = m }) }
-                    }
+                    TimeField(stringResource(R.string.set_bedtime), bed) { bed = it }
+                    Spacer(Modifier.height(8.dp))
+                    TimeField(stringResource(R.string.set_wake), wake) { wake = it }
                 }
             }
         }

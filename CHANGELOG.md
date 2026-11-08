@@ -6,6 +6,17 @@ line "<!-- tg", then 2-4 short lines in Russian for users (what is new, what is 
 then close it like any HTML comment. The release notes carry it, and the chat bot posts those lines.
 -->
 
+## [1.1.0] - 2026-11-08
+
+### Changed
+- Any hours: bedtime, waking and the window for the day's checks are set on a clock face, as on an alarm clock, instead of a few fixed times (#1). A night owl can go to bed at five in the morning.
+- The checks' window may cross midnight (from 13:00 to 03:00, say), and the home screen offers the ritual and the dream around your own bedtime and waking, not the usual ones.
+
+<!-- tg
+Время сна, подъёма и проверок теперь выставляется на циферблате, как в будильнике, – хоть в пять утра.
+Проверки могут идти и после полуночи, а ритуал и «Что снилось?» подстраиваются под ваш режим.
+-->
+
 ## [1.0.1] - 2026-10-25
 
 ### Added

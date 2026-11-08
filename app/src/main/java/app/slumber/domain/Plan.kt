@@ -11,8 +11,12 @@ import kotlin.random.Random
  * from the date and a per-install [salt], so it needs no storage and comes out the same after a reboot.
  */
 object Plan {
-    /** Minutes after midnight of each check on [day], in order. */
-    fun of(day: LocalDate, from: Int, to: Int, count: Int, salt: Long): List<Int> {
+    /**
+     * Minutes after midnight of each check on [day], in order. A window that crosses midnight (from 13:00 to
+     * 03:00) runs on into the next day: its late checks come as minutes past 1440 (#1).
+     */
+    fun of(day: LocalDate, from: Int, to0: Int, count: Int, salt: Long): List<Int> {
+        val to = if (to0 <= from) to0 + 1440 else to0
         if (count <= 0 || to <= from) return emptyList()
         val r = Random(day.toEpochDay() * 7919 + salt)
         val slot = (to - from).toDouble() / count
@@ -26,7 +30,7 @@ object Plan {
         for (d in 0..7) {
             val day = now.toLocalDate().plusDays(d.toLong())
             for (m in of(day, from, to, count, salt)) {
-                val at = day.atTime(LocalTime.of(m / 60, m % 60))
+                val at = day.plusDays((m / 1440).toLong()).atTime(LocalTime.of(m % 1440 / 60, m % 60))
                 if (at.isAfter(now) && (quietUntil == null || !at.isBefore(quietUntil))) return at
             }
         }
